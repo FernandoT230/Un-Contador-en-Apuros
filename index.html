@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#1e3a8a" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>Un Contador en Apuros</title>
+    <link rel="manifest" href="./manifest.json" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@500&family=Kalam:wght@400;700&display=swap" rel="stylesheet">
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['Inter', 'sans-serif'],
+              mono: ['JetBrains Mono', 'monospace'],
+              hand: ['Kalam', 'cursive'],
+            },
+            colors: {
+              ledger: {
+                50: '#eff6ff',
+                100: '#dbeafe',
+                200: '#bfdbfe',
+                500: '#3b82f6',
+                600: '#2563eb',
+                700: '#1d4ed8',
+                800: '#1e40af',
+                900: '#1e3a8a',
+              },
+              gold: {
+                100: '#fef9c3',
+                300: '#fde047',
+                400: '#facc15',
+                500: '#eab308',
+                600: '#ca8a04',
+              },
+            },
+            boxShadow: {
+              'realistic': '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05), inset 0 -2px 4px rgba(0,0,0,0.1)',
+              'inner-depth': 'inset 0 2px 4px 0 rgba(0, 0, 0, 0.06)',
+            },
+            animation: {
+              'pop-in': 'popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards',
+              'shake': 'shake 0.5s cubic-bezier(.36,.07,.19,.97) both',
+              'float': 'float 3s ease-in-out infinite',
+              'confetti': 'confetti 1s ease-out forwards',
+            },
+            keyframes: {
+              popIn: {
+                '0%': { opacity: '0', transform: 'scale(0.8)' },
+                '100%': { opacity: '1', transform: 'scale(1)' },
+              },
+              shake: {
+                '10%, 90%': { transform: 'translate3d(-1px, 0, 0)' },
+                '20%, 80%': { transform: 'translate3d(2px, 0, 0)' },
+                '30%, 50%, 70%': { transform: 'translate3d(-4px, 0, 0)' },
+                '40%, 60%': { transform: 'translate3d(4px, 0, 0)' }
+              },
+              float: {
+                '0%, 100%': { transform: 'translateY(0)' },
+                '50%': { transform: 'translateY(-10px)' },
+              },
+              confetti: {
+                '0%': { transform: 'translateY(0) rotate(0deg)', opacity: '1' },
+                '100%': { transform: 'translateY(100vh) rotate(720deg)', opacity: '0' }
+              }
+            }
+          }
+        }
+      }
+    </script>
+    <style>
+      body {
+        background-color: #f0f4f8;
+      }
+      /* Realistic Ledger Paper Effect */
+      .ledger-bg {
+        background-color: #f8fafc;
+        background-image: 
+          linear-gradient(#cbd5e1 1px, transparent 1px),
+          linear-gradient(90deg, transparent 40px, #e2e8f0 40px, #e2e8f0 42px, transparent 42px);
+        background-size: 100% 2rem, 100% 100%;
+        background-attachment: local;
+        position: relative;
+      }
+      /* Noise texture overlay for realism */
+      .ledger-bg::before {
+        content: "";
+        position: fixed;
+        top: 0; left: 0; width: 100%; height: 100%;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.04'/%3E%3C/svg%3E");
+        pointer-events: none;
+        z-index: -1;
+      }
+      .chalk-text {
+        font-family: 'JetBrains Mono', monospace;
+      }
+      @keyframes urgent-pulse {
+        0%, 100% { color: #ef4444; transform: scale(1); }
+        50% { color: #b91c1c; transform: scale(1.1); }
+      }
+      .animate-urgent {
+        animation: urgent-pulse 1s infinite;
+      }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "react/": "https://aistudiocdn.com/react@^19.2.0/",
+    "react": "https://aistudiocdn.com/react@^19.2.0",
+    "@vitejs/plugin-react": "https://aistudiocdn.com/@vitejs/plugin-react@^5.1.1",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
+    "vite": "https://aistudiocdn.com/vite@^7.2.4",
+    "lucide-react": "https://aistudiocdn.com/lucide-react@^0.555.0"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="./index.tsx"></script>
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('./service-worker.js')
+            .then((reg) => console.log('Service Worker registrado', reg))
+            .catch((err) => console.log('Error al registrar Service Worker', err));
+        });
+      }
+    </script>
+  <script type="module" src="/index.tsx"></script>
+</body>
+</html>

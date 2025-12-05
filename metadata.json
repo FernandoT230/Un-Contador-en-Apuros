@@ -1,0 +1,5 @@
+{
+  "name": "Un Contador en Apuros",
+  "description": "Ayuda al contador a clasificar sus cuentas antes de que se acabe el tiempo.",
+  "requestFramePermissions": []
+}
